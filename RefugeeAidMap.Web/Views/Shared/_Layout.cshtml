@@ -1,6 +1,7 @@
 ﻿@using RefugeeAidMap.Web.Common
 @{ 
     var applicationName = CustomConfigurationManager.AppSettings.ApplicationName;
+    var environmentName = CustomConfigurationManager.AppSettings.EnvironmnentName;
 }
 <!DOCTYPE html>
 <html>
@@ -38,6 +39,10 @@
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - @applicationName</p>
+            @if (!string.IsNullOrEmpty(environmentName))
+            {
+                <p><strong>@environmentName</strong></p>
+            }
         </footer>
     </div>
 

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using RefugeeAidMap.Web.Common;
 
 namespace RefugeeAidMap.Web.Models
 {
@@ -21,7 +22,7 @@ namespace RefugeeAidMap.Web.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base(CustomConfigurationManager.AppSettings.SqlConnectionString, throwIfV1Schema: false)
         {
         }
 

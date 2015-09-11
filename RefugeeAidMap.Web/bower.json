@@ -1,0 +1,7 @@
+{
+  "name": "RefugeeAidMap.Web",
+  "private": true,
+  "dependencies": {
+	  "angular": "*"
+  }
+}

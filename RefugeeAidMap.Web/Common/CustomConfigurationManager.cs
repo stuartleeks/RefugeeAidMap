@@ -33,5 +33,6 @@ namespace RefugeeAidMap.Web.Common
         public string ApplicationName { get { return this["APPLICATION_NAME"] ?? "**App name missing**";} }
         public string EnvironmnentName { get { return this["ENVIRONMENT"]; } }
         public string SqlConnectionString {  get { return this["SQL_CONNECTION"]; } }
+        public string BingMapsKey {  get { return this["BING_MAPS_KEY"]; } }
     }
 }

@@ -4,13 +4,15 @@ module Donate {
     export interface IMarkerInfo {
         title: string,
         lat: number,
-        lng: number
+        lng: number,
+        groupLink: string,
+        postcode: string,
+        locale: string
     }
     export class Controller {
         message: string;
         markers: IMarkerInfo[]
         currentMarker: IMarkerInfo;
-        currentInfoWindow: google.maps.InfoWindow;
         map: google.maps.Map;
 
         static $inject = ['donateService', '$scope'];
@@ -26,23 +28,19 @@ module Donate {
                 'markersLoaded',
                 (event, markers: IMarkerInfo[]) => {
                     this.markers = markers;
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: document.getElementById('infoWindowContent')
+                    });
                     this.markers.forEach(m=> {
                         var mapMarker = new google.maps.Marker({
                             position: new google.maps.LatLng(m.lat, m.lng),
                             title: m.title
                         });
-                        var infoWindow = new google.maps.InfoWindow({
-                            // TODO - template this in the view!
-                            // TODO - sanitize content/encode content!!
-                            content: '<b>' + m.title + '</b>'
-                        });
                         mapMarker.addListener('click', () => {
-                            if (this.currentInfoWindow != null) {
-                                this.currentInfoWindow.close();
-                            }
+                            infoWindow.close();
                             this.currentMarker = m;
+                            $scope.$apply();
                             infoWindow.open(this.map, mapMarker);
-                            this.currentInfoWindow = infoWindow;
                         }); 
                         mapMarker.setMap(this.map);
                     });

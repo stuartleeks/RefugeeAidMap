@@ -1,22 +1,33 @@
 ﻿@inject Microsoft.Framework.Configuration.IConfiguration Config
-@{ 
+@{
     var clientKey = Config["Google:Maps:ClientKey"]; // TODO - make this typed access to the config!!
     ViewBag.Title = "Donate Items";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 <style>
-    @*
-     html, body, .full-height, .body-content{
-        height:100%;
+    @* html, body, .full-height, .body-content {
+        height: 100%;
     }
+
     #map-container {
-        height:80%;
-        min-height:400px;
+        height: 80%;
+        min-height: 400px;
     }
-    *@
-    #map-container{
-        height:400px;
+
+    *@ #map-container {
+        height: 400px;
+    }
+
+    .info-window h1 {
+        font-size: medium;
+    }
+
+    .ng-hide {
+        display: block !important;
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
     }
 </style>
 <script src="https://maps.googleapis.com/maps/api/js?key=@(clientKey)"></script>
@@ -29,6 +40,11 @@
 <div ng-app="app" class="full-height">
     <div ng-controller="donateController as vm" class="full-height">
         <p ng-show="vm.message">{{vm.message}}</p>
+        <div id="infoWindowContent" class="info-window ng-hide" ng-show="vm.currentMarker">
+            <h1>{{vm.currentMarker.title}}</h1>
+            <p>{{ vm.currentMarker.locale }}</p>
+            <a ng-show="vm.currentMarker.groupLink" href="{{vm.currentMarker.groupLink}}">facebook</a>
+        </div>
         <div id="map-container"></div>
     </div>
 </div>

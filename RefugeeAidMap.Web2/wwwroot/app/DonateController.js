@@ -10,23 +10,19 @@ var Donate;
             this.message = 'Hello!';
             $scope.$on('markersLoaded', function (event, markers) {
                 _this.markers = markers;
+                var infoWindow = new google.maps.InfoWindow({
+                    content: document.getElementById('infoWindowContent')
+                });
                 _this.markers.forEach(function (m) {
                     var mapMarker = new google.maps.Marker({
                         position: new google.maps.LatLng(m.lat, m.lng),
                         title: m.title
                     });
-                    var infoWindow = new google.maps.InfoWindow({
-                        // TODO - template this in the view!
-                        // TODO - sanitize content/encode content!!
-                        content: '<b>' + m.title + '</b>'
-                    });
                     mapMarker.addListener('click', function () {
-                        if (_this.currentInfoWindow != null) {
-                            _this.currentInfoWindow.close();
-                        }
+                        infoWindow.close();
                         _this.currentMarker = m;
+                        $scope.$apply();
                         infoWindow.open(_this.map, mapMarker);
-                        _this.currentInfoWindow = infoWindow;
                     });
                     mapMarker.setMap(_this.map);
                 });

@@ -6,7 +6,16 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 <style>
+    @*
+     html, body, .full-height, .body-content{
+        height:100%;
+    }
     #map-container {
+        height:80%;
+        min-height:400px;
+    }
+    *@
+    #map-container{
         height:400px;
     }
 </style>
@@ -17,8 +26,8 @@
 <script src="~/app/DonateService.js"></script>
 
 
-<div ng-app="app">
-    <div ng-controller="donateController as vm">
+<div ng-app="app" class="full-height">
+    <div ng-controller="donateController as vm" class="full-height">
         <p ng-show="vm.message">{{vm.message}}</p>
         <div id="map-container"></div>
     </div>

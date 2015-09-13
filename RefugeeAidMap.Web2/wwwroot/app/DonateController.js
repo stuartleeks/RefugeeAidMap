@@ -15,6 +15,19 @@ var Donate;
                         position: new google.maps.LatLng(m.lat, m.lng),
                         title: m.title
                     });
+                    var infoWindow = new google.maps.InfoWindow({
+                        // TODO - template this in the view!
+                        // TODO - sanitize content/encode content!!
+                        content: '<b>' + m.title + '</b>'
+                    });
+                    mapMarker.addListener('click', function () {
+                        if (_this.currentInfoWindow != null) {
+                            _this.currentInfoWindow.close();
+                        }
+                        _this.currentMarker = m;
+                        infoWindow.open(_this.map, mapMarker);
+                        _this.currentInfoWindow = infoWindow;
+                    });
                     mapMarker.setMap(_this.map);
                 });
             });

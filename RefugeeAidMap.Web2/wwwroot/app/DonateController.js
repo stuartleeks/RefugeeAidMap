@@ -10,6 +10,13 @@ var Donate;
             this.message = 'Hello!';
             $scope.$on('markersLoaded', function (event, markers) {
                 _this.markers = markers;
+                _this.markers.forEach(function (m) {
+                    var mapMarker = new google.maps.Marker({
+                        position: new google.maps.LatLng(m.lat, m.lng),
+                        title: m.title
+                    });
+                    mapMarker.setMap(_this.map);
+                });
             });
             this.service.loadMarkers();
             this.initMap('map-container'); // TODO - hook this up in a directive???

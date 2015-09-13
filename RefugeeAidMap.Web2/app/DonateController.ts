@@ -2,6 +2,9 @@
 /// <reference path="../typings/angularjs/angular.d.ts" />
 module Donate {
     export interface IMarkerInfo {
+        title: string,
+        lat: number,
+        lng: number
     }
     export class Controller {
         message: string;
@@ -21,9 +24,14 @@ module Donate {
                 'markersLoaded',
                 (event, markers: IMarkerInfo[]) => {
                     this.markers = markers;
-                }
-                );
-
+                    this.markers.forEach(m=> {
+                        var mapMarker = new google.maps.Marker({
+                            position: new google.maps.LatLng(m.lat, m.lng),
+                            title: m.title
+                        });
+                        mapMarker.setMap(this.map);
+                    });
+                });
 
             this.service.loadMarkers();
 

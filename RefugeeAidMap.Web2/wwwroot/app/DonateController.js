@@ -29,6 +29,7 @@ var Donate;
             });
             this.service.loadMarkers();
             this.initMap('map-container'); // TODO - hook this up in a directive???
+            this.geocoder = new google.maps.Geocoder();
         }
         ;
         Controller.prototype.initMap = function (mapElementId) {
@@ -52,6 +53,21 @@ var Donate;
                     _this.map.setZoom(10);
                 }, function (e) { return _this.message = 'Failed to get your location'; });
             }
+        };
+        Controller.prototype.searchClicked = function () {
+            var _this = this;
+            var searchValue = this.searchValue;
+            this.message = 'Searching...';
+            this.geocoder.geocode({ address: searchValue }, function (results, status) {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    _this.map.setCenter(results[0].geometry.location);
+                    _this.message = '';
+                }
+                else {
+                    _this.message = "Couldn't find " + searchValue;
+                }
+                _this.$scope.$apply();
+            });
         };
         Controller.$inject = ['donateService', '$scope'];
         return Controller;

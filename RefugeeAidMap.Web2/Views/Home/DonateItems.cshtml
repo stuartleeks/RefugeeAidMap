@@ -40,8 +40,13 @@
 <div ng-app="app" class="full-height">
     <div ng-controller="donateController as vm" class="full-height">
         <p ng-show="vm.message">{{vm.message}}</p>
+        <div>
+            <label for="search">Search</label>:<input id="search" type="text" ng-model="vm.searchValue" ng-keyup="$event.keyCode==13 && vm.searchClicked()"/>
+            <button ng-click="vm.searchClicked()">Go!</button>
+        </div>
         <div id="infoWindowContent" class="info-window ng-hide" ng-show="vm.currentMarker">
             <h1>{{vm.currentMarker.title}}</h1>
+            <p>{{ vm.currentMarker.business }}</p>
             <p>{{ vm.currentMarker.locale }}</p>
             <a ng-show="vm.currentMarker.groupLink" href="{{vm.currentMarker.groupLink}}">facebook</a>
         </div>

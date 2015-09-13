@@ -7,13 +7,17 @@ module Donate {
         lng: number,
         groupLink: string,
         postcode: string,
-        locale: string
+        locale: string,
+        business: string
     }
     export class Controller {
         message: string;
         markers: IMarkerInfo[]
         currentMarker: IMarkerInfo;
         map: google.maps.Map;
+        geocoder: google.maps.Geocoder;
+
+        searchValue: string;
 
         static $inject = ['donateService', '$scope'];
 
@@ -41,7 +45,7 @@ module Donate {
                             this.currentMarker = m;
                             $scope.$apply();
                             infoWindow.open(this.map, mapMarker);
-                        }); 
+                        });
                         mapMarker.setMap(this.map);
                     });
                 });
@@ -49,6 +53,8 @@ module Donate {
             this.service.loadMarkers();
 
             this.initMap('map-container'); // TODO - hook this up in a directive???
+
+            this.geocoder = new google.maps.Geocoder();
         };
 
 
@@ -78,6 +84,20 @@ module Donate {
                     },
                     e => this.message = 'Failed to get your location');
             }
+        }
+
+        searchClicked() {
+            var searchValue = this.searchValue;
+            this.message = 'Searching...';
+            this.geocoder.geocode({ address: searchValue }, (results, status) => {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    this.map.setCenter(results[0].geometry.location);
+                    this.message = '';
+                } else {
+                    this.message = "Couldn't find " + searchValue;
+                }
+                this.$scope.$apply();
+            });
         }
     }
 }

@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.ts"],"names":[],"mappings":"AAAA,0DAA0D;AAE1D,OAAO,CAAC,MAAM,CAAC,KAAK,EAAE,EAAE,CAAC,CAAC","file":"app.js","sourcesContent":["/// <reference path=\"../typings/angularjs/angular.d.ts\" />\r\n\r\nangular.module('app', []);\r\n"],"sourceRoot":"/source/"}

@@ -1,16 +1,25 @@
-﻿@{
+﻿@inject Microsoft.Framework.Configuration.IConfiguration Config
+@{ 
+    var clientKey = Config["Google:Maps:ClientKey"]; // TODO - make this typed access to the config!!
     ViewBag.Title = "Donate Items";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
-
-<script src="~/Scripts/lib/angular/angular.js"></script>
-<script src="~/Scripts/app/app.js"></script>
-<script src="~/Scripts/app/DonateController.js"></script>
+<style>
+    #map-container {
+        height:400px;
+    }
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?key=@(clientKey)"></script>
+<script src="~/lib/angular/angular.js"></script>
+<script src="~/app/app.js"></script>
+<script src="~/app/DonateController.js"></script>
+<script src="~/app/DonateService.js"></script>
 
 
 <div ng-app="app">
-    <div ng-controller="Donate.Controller">
-        <p>{{greetingText}}</p>
+    <div ng-controller="donateController as vm">
+        <p ng-show="vm.message">{{vm.message}}</p>
+        <div id="map-container"></div>
     </div>
 </div>
